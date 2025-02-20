@@ -1,10 +1,11 @@
 
-let text = "lorem ";
+let text = typeof("lorem");
 console.log(text);
-let number = 5;
+let number = typeof(5) ;
 console.log(number);
-let boolean = true;
+let boolean = typeof(true);
 console.log(boolean);
-let none = null;
+let none = typeof(null);
 console.log(`${none}`);
+let undefined
 console.log(undefined);

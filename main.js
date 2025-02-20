@@ -1,4 +1,2 @@
-let n = 10369
-
-
-console.log(n.toString().split(''));
+let number = 10369
+console.log(number.toString().split('').join(' '));

@@ -1,18 +1,17 @@
-let num0rStr = "null"
-console.log (num0rStr);
+let numOrStr = prompt('input number or string');
+console.log (numOrStr);
 
 switch (true) {
-    case num0rStr === null:
-        console.log("и скасували")
+    case numOrStr === null:
+        console.log("ви скасували")
         break
-    case typeof num0rStr === "string" && num0rStr.trim() === "":
+    case typeof numOrStr === "string" && numOrStr.trim() === "":
         console.log("Empty string");
         break;
-    case isNaN(+num0rStr):
+    case isNaN(+numOrStr):
         console.log("number is Ba_NaN")
         break
     default:
         console.log('OK!')
         break
 }
-

@@ -1,4 +1,4 @@
-const array = [1, 3, 7, 4, 6, 7, 2, 5, 7];
+const array = [1, 3, 4, 6, 2, 5, 7];
 
 function removeElement(arrayValue, item) {
     for (let i = 0; i < arrayValue.length; i++) {
@@ -7,5 +7,5 @@ function removeElement(arrayValue, item) {
         }
     }
 }
-removeElement(array, 7);
+removeElement(array, 4);
 console.log(array);

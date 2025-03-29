@@ -1,13 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <link rel="stylesheet" href="style.css">
-        <meta charset="UTF-8">
-        <title>Title</title>
-    </head>
-    <body>
-        <script src="main.js"></script>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container">
+    <form class="user_form">
+        <label><input name="name" type="text" placeholder="Name" required>
+            <div id="error-name" class="err_div"></div>
+            <input name="message" class="message" type="text" placeholder="Message">
+            <div id="error-message" class="err_div"></div>
+            <input name="phone" type="text" placeholder="Phone">
+            <div id="error-phone" class="err_div"></div>
+            <input name="email" type="text" placeholder="Gmail">
+            <div id="error-email" class="err_div"></div>
+            <button type="submit">Submit</button>
+        </label>
 
 
-    </body>
+    </form>
+</div>
+
+
+<script src="main.js"></script>
+
+
+</body>
+
 </html>

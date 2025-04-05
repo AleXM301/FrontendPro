@@ -53,9 +53,7 @@ h1, h2 {
     align-items: center;
     margin-bottom: 10px;
 }
-.todo-item--checked {
-    text-decoration: line-through;
-}
+
 .todo-item__description {
     flex-grow: 1;
     padding-left: 10px;

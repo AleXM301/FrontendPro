@@ -1,0 +1,23 @@
+* {
+    color: #ffffff;
+    font-family: Verdana, sans-serif;
+    margin: 5px;
+
+}
+
+.wrapper {
+    display: flex;
+}
+
+.container {
+
+    background-image: linear-gradient(to right bottom, #67bcff, #001ca1);
+    border-radius: 10px;
+    padding: 5px;
+}
+.weather_img{
+}
+
+.up {
+    text-transform: capitalize;
+}

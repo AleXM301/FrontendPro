@@ -1,0 +1,14 @@
+* {
+    margin: 0 0 10px;
+    list-style: none;
+
+}
+.wrapper {
+    width: 500px;
+    margin: 0 auto;
+}
+.comment {
+    background-color: #f6f6f6;
+    padding: 10px;
+    border-radius: 10px;
+}

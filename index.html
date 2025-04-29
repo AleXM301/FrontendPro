@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <link rel="stylesheet" href="style.css">
-        <meta charset="UTF-8">
-        <title>Title</title>
-    </head>
-    <body>
-        <script src="main.js"></script>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="wrapper">
+    <form id="post_form">
+        <fieldset>
+            <legend class="form_title">New post</legend>
+            <label for="title">title</label>
+            <input class="title_new_post" type="text" name="title" id="title">
+
+            <label for="body_content">body</label>
+            <input class="body_new_post" type="text" name="body" id="body_content">
+
+            <button id="btn_post_add">Add new post</button>
+        </fieldset>
+    </form>
+    <ul class="post_list"></ul>
+</div>
+<script src="js/index.js" type="module"></script>
 
 
-    </body>
+</body>
 </html>

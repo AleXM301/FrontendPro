@@ -1,5 +1,5 @@
 export const list = document.querySelector('.todo_list');
-export const input = document.querySelector('#todo_input');
+const input = document.querySelector('#todo_input');
 export const addBtn = document.querySelector('.addBtn');
 
 import {getTodos, createTodo, changeTodo, deleteTodo} from './api.js'

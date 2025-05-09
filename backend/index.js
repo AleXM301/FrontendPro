@@ -1,94 +1,78 @@
 const express = require('express');
-const cors = require('cors')
+const cors = require('cors');
 const app = express();
 const PORT = 3000;
-let currentCount = 2
-
-app.use(cors());
+let currentCount = 2;
+const origin ={
+        origin: `http://localhost:63342`,
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+        maxAge: 600,
+}
+app.use(cors(origin));
 app.use(express.json());
-
-
-const todos = [
-    {
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+const todos = new Map([
+    [1, {
         id: 1,
         title: "Read a book",
         finished: true
-    },
-    {
+    }],
+    [2, {
         id: 2,
         title: "Write a book",
         finished: false
-    }
-]
-
-
+    }]
+]);
 app.get("/todos", (req, res) => {
-    console.log(`Object  "ToDos"`,todos)
-    res.json(todos)
+    res.json(Array.from(todos.values()));
 });
-
 
 app.get("/todos/:id", (req, res) => {
+
     const todoId = +req.params.id;
-    const todo = todos.find(todo => todo.id === todoId)
+    const todo = todos.get(todoId);
     if (todo) {
-        res.json(todos)
+        res.json(todo);
     } else {
-        return res.status(400).json({error: "Not Found"})
+        res.status(404).json({error: "Not Found" });
     }
 });
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 
 app.post("/todos", (req, res) => {
-console.log(req.body)
-console.log(todos)
 
     const title = req.body.title;
-    if (!title) {
-        return  res.status(400).json({error: "title not found"})
+    if (typeof title !== 'string' || title.trim() === '') {
+        return res.status(400).json({ error: "Invalid title" });
     }
-    const newTodo =
-        {
+    const newTodo = {
             id: ++currentCount,
-            title,
-            finished: false
+            title: title.trim(),
+            finished: false,
         }
-
-    todos.push(newTodo)
-    res.status(201).json(newTodo)
-
-})
-
-
+    todos.set(newTodo.id, newTodo);
+    res.status(201).json(newTodo);
+});
 app.put("/todos/:id", (req, res) => {
     const id = +req.params.id;
-    const finished = req.body.finished;
-
-
-    console.log('id:',id)
-    console.log('finished:',finished);
-    console.log('req body',req.body)
-    console.log('todos',todos)
-    const todoIndex = todos.findIndex(todo => todo.id === id);
-
-    if (todoIndex === -1){
-        return  res.status(404).json({error: "Not Found"});
+    if (!todos.has(id)) {
+        return res.status(404).json({error: "Not Found"});
     }
-
-    let todo = todos[todoIndex];
-
-    todo.finished = finished;
-    res.status(200).json(todos[todoIndex]);
-
-})
+    const { title, finished } = req.body;
+    if (typeof title !== 'string' || title.trim() === '' || typeof finished !== 'boolean') {
+        return res.status(400).json({ error: "Invalid data" });
+    }
+    const updatedTodo = { id, title: title.trim(), finished };
+    todos.set(id, updatedTodo);
+    res.status(200).json(updatedTodo);
+});
 app.delete("/todos/:id", (req, res) => {
     const todoId = +req.params.id;
-
-    const todoIndex = todos.findIndex(todo => todo.id === todoId)
-
-    if (todoIndex === -1){
-       return  res.status(404).json({error: "Not Found"})
+    if (isNaN(todoId)) {
+        return res.status(400).json({ error: "Invalid ID" });
     }
-    todos.splice(todoIndex, 1)
-    res.status(204).send()
+    if (!todos.has(todoId)) {
+        return res.status(404).json({error: "Not Found"});
+    }
+    todos.delete(todoId);
+    res.status(204).send();
 });

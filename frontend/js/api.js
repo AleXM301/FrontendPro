@@ -1,37 +1,52 @@
-import {API_URL} from './config.js'
+    import {API_URL} from './config.js';
 
-export async function loadObjects() {
-    const response = await fetch(API_URL);
-    return await response.json();
-}
+    export async function getTodos() {
+        const response = await fetch(API_URL);
+        return await response.json();
+    }
 
-export async function createObject(title) {
-    const response = await fetch(API_URL, {
-        headers: {'Content-Type': 'application/json'},
-        method: 'POST',
-        body: JSON.stringify({
-            title: title,
-            active: false,
-        })
-    });
-    return await response.json();
-}
+    export async function createTodo(title) {
+       try {
+           const response = await fetch(API_URL, {
+               headers: {'Content-Type': 'application/json'},
+               method: 'POST',
+               body: JSON.stringify({title: String(title)})
+           });
+           return await response.json();
+       }
+       catch (error) {
+           console.log(error);
+       }
+    }
 
-export async function changeObject(finished, id) {
-    const response = await fetch(API_URL + id, {
-        headers: {'Content-Type':'application/json'},
-        method: 'PUT',
-        body: JSON.stringify({
-            finished
-        })
-    });
-    return await response.json();
-}
-export async function deleteObject(id) {
-    const response = await fetch(API_URL + id, {
-        method: 'DELETE',
-    })
-}
+    export async function changeTodo(id, title, finished) {
+      try {
+          const response = await fetch(API_URL + id, {
+              headers: {'Content-Type': 'application/json'},
+              method: 'PUT',
+              body: JSON.stringify({
+                  id,
+                  title,
+                  finished,
+              })
+          });
+          return await response.json();
+      }
+      catch (error) {
+          console.log(error);
+      }
+    }
+
+    export async function deleteTodo(id) {
+       try {
+           await fetch(API_URL + '/' + id, {
+               method: 'DELETE'
+           });
+       }
+       catch (error) {
+           console.log(error);
+       }
+    }
 
 
 

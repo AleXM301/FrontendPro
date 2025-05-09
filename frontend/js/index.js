@@ -1,52 +1,43 @@
-export const list = document.querySelector('.to_do_list');
-export const input = document.querySelector('#to_do_input');
+export const list = document.querySelector('.todo_list');
+export const input = document.querySelector('#todo_input');
 export const addBtn = document.querySelector('.addBtn');
-const deleteBtn = document.querySelector('.removeBtn');
 
-import {loadObjects, createObject, changeObject, deleteObject} from './api.js'
-import {renderObject} from './ui.js';
+import {getTodos, createTodo, changeTodo, deleteTodo} from './api.js'
+import {renderTodo} from './ui.js';
 
-async function deleteTodos (id){
-    await deleteObject(id).catch( err => console.log(err));
-    list.innerHTML = '';
-    await  loadObjects().then(data => data.forEach((object) => renderObject(object)))
+async function loadTodo() {
+   try {
+       const todos = await getTodos();
+       return todos.forEach(todo => renderTodo(todo));
+   }
+   catch (error) {
+       console.error(error);
+   }
 }
-loadObjects()
-    .then(data => {
-        console.log(data);
-        data.forEach((item) => renderObject(item))
-        console.log('function-loadObject: ', data)
-    })
-    .catch(error => {
-        console.log(error)
-    });
-
-addBtn.addEventListener('click', () => {
-
-    createObject(input.value).then(data => {
-        console.log(data);
-        renderObject(data);
-    }).catch(error => console.log(error))
-})
-
-list.addEventListener('click', (e) => {
-    let id = e.target.dataset.id;
-
-    if (e.target.classList.contains('checkbox')) {
-        let finished = e.target.checked;
-        console.log('Target check', finished);
-        console.log('Target id', id);
-        changeObject(finished, id).then();
-
-    } else if (e.target.classList.contains('removeBtn')) {
-        deleteTodos(id).catch( err => console.log(err))
+addBtn.addEventListener('click', async () => {
+    if (input.value.trim()) {
+        let newTodo = await createTodo(input.value);
+        renderTodo(newTodo);
+        input.value = '';
 
     }
-})
+});
 
+list.addEventListener('click', async (e) => {
 
+    let id = e.target.dataset.id;
+    if (e.target.classList.contains('checkbox')){
 
+        const container = e.target.closest('.label-checkbox');
+        const title = container.querySelector('label').textContent;
+        let finished = e.target.checked;
+        await changeTodo(id, title, finished);
 
-
-
-
+    } else if (e.target.closest('.removeBtn')) {
+        const btn = e.target.closest('.removeBtn');
+        const btnID = btn.dataset.id;
+        await deleteTodo(btnID);
+        btn.closest('li').remove();
+    }
+});
+loadTodo();
